@@ -50,6 +50,25 @@ app.delete("/api/movies/:id", (req, res, next) => {
   res.status(200).json({ ...movie });
 });
 
+// 4. update a movie
+app.put("/api/movies/:id", (req, res, next) => {
+  const payload = req.body;
+  if (!payload.name || !payload.year || !payload.rating) {
+    return res.status(400).json({ message: "Bad request" });
+  }
+
+  const movieIndex = movies.findIndex((m) => m.id == req.params.id);
+  if (movieIndex == -1) {
+    return res.status(404).json({ message: "Movie not found" });
+  }
+
+  movies[movieIndex]["name"] = payload.name;
+  movies[movieIndex]["year"] = payload.year;
+  movies[movieIndex]["rating"] = payload.rating;
+
+  res.status(200).json({ ...movies[movieIndex] });
+});
+
 // error handlers
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not found" });
