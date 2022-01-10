@@ -4,7 +4,7 @@ const PORT = 1337;
 
 app.use(express.json());
 
-const movies = [
+let movies = [
   { id: 1641812427583, name: "The Matrix", year: 1998, rating: "9/10" },
   { id: 1641812427483, name: "Ironman", year: 2008, rating: "8/10" },
 ];
@@ -36,6 +36,18 @@ app.post("/api/movies", (req, res) => {
   };
   movies.push(movie);
   res.status(201).json(movie);
+});
+
+// 3. remove a movie
+app.delete("/api/movies/:id", (req, res, next) => {
+  const movie = movies.find((m) => m.id == req.params.id);
+  if (!movie) {
+    return res.status(404).json({ message: "Movie not found" });
+  }
+
+  const filtered = movies.filter((m) => m.id != req.params.id);
+  movies = filtered;
+  res.status(200).json({ ...movie });
 });
 
 // error handlers
