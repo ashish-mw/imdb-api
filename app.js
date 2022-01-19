@@ -1,7 +1,10 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
 const PORT = 1337;
 
+app.use(cors());
 app.use(express.json());
 
 let movies = [
@@ -11,7 +14,10 @@ let movies = [
     year: 1998,
     rating: "3",
     genre: "Scifi, Thriller",
-    image: { url: "https://i.pravatar.cc/300", altInfo: "Matrix DVD cover" },
+    image: {
+      url: "https://m.media-amazon.com/images/I/A1Poz-cRXdL._SY445_.jpg",
+      altInfo: "Matrix DVD cover",
+    },
   },
   {
     id: 1641812427483,
@@ -19,7 +25,10 @@ let movies = [
     year: 2008,
     rating: "4",
     genre: "Fantasy, Super hero",
-    image: { url: "https://i.pravatar.cc/300", altInfo: "Ironman DVD cover" },
+    image: {
+      url: "https://m.media-amazon.com/images/I/517EnJmL7+L.jpg",
+      altInfo: "Ironman DVD cover",
+    },
   },
 ];
 
