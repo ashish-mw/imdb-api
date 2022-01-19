@@ -5,8 +5,22 @@ const PORT = 1337;
 app.use(express.json());
 
 let movies = [
-  { id: 1641812427583, name: "The Matrix", year: 1998, rating: "9/10" },
-  { id: 1641812427483, name: "Ironman", year: 2008, rating: "8/10" },
+  {
+    id: 1641812427583,
+    name: "The Matrix",
+    year: 1998,
+    rating: "3",
+    genre: "Scifi, Thriller",
+    image: { url: "https://i.pravatar.cc/300", altInfo: "Matrix DVD cover" },
+  },
+  {
+    id: 1641812427483,
+    name: "Ironman",
+    year: 2008,
+    rating: "4",
+    genre: "Fantasy, Super hero",
+    image: { url: "https://i.pravatar.cc/300", altInfo: "Ironman DVD cover" },
+  },
 ];
 
 // 0. get one movie
@@ -27,7 +41,15 @@ app.get("/api/movies", (req, res) => {
 // 2. add a movie
 app.post("/api/movies", (req, res) => {
   const payload = req.body;
-  if (!payload.name || !payload.year || !payload.rating) {
+  if (
+    !payload.name ||
+    !payload.year ||
+    !payload.rating ||
+    !payload.genre ||
+    !payload.image ||
+    !payload.image.url ||
+    !payload.image.altInfo
+  ) {
     return res.status(400).json({ message: "Bad request" });
   }
   const movie = {
