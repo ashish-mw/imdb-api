@@ -84,7 +84,15 @@ app.delete("/api/movies/:id", (req, res, next) => {
 // 4. update a movie
 app.put("/api/movies/:id", (req, res, next) => {
   const payload = req.body;
-  if (!payload.name || !payload.year || !payload.rating) {
+  if (
+    !payload.name ||
+    !payload.year ||
+    !payload.rating ||
+    !payload.genre ||
+    !payload.image ||
+    !payload.image.url ||
+    !payload.image.altInfo
+  ) {
     return res.status(400).json({ message: "Bad request" });
   }
 
@@ -96,6 +104,8 @@ app.put("/api/movies/:id", (req, res, next) => {
   movies[movieIndex]["name"] = payload.name;
   movies[movieIndex]["year"] = payload.year;
   movies[movieIndex]["rating"] = payload.rating;
+  movies[movieIndex]["image"] = payload.image;
+  movies[movieIndex]["genre"] = payload.genre;
 
   res.status(200).json({ ...movies[movieIndex] });
 });
